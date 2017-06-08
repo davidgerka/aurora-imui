@@ -28,6 +28,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -156,7 +157,8 @@ public class MessageListActivity extends Activity implements ChatView.OnKeyboard
             public void switchToCameraMode() {
                 String[] perms = new String[]{
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.CAMERA
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.RECORD_AUDIO
                 };
 
                 if (!EasyPermissions.hasPermissions(MessageListActivity.this, perms)) {
@@ -263,6 +265,7 @@ public class MessageListActivity extends Activity implements ChatView.OnKeyboard
             message.setTimeString(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date()));
             list.add(message);
         }
+        Collections.reverse(list);
         return list;
     }
 
@@ -343,6 +346,13 @@ public class MessageListActivity extends Activity implements ChatView.OnKeyboard
                         getApplicationContext().getString(R.string.avatar_click_hint),
                         Toast.LENGTH_SHORT).show();
                 // do something
+            }
+        });
+
+        mAdapter.setMsgResendListener(new MsgListAdapter.OnMsgResendListener<MyMessage>() {
+            @Override
+            public void onMessageResend(MyMessage message) {
+                // resend message here
             }
         });
 
