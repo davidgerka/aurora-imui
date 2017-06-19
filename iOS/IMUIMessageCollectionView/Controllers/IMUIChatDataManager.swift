@@ -13,18 +13,18 @@ var needShowTimeInterval = Double.greatestFiniteMagnitude
 
 class IMUIChatDataManager: NSObject {
   var allMsgidArr = [String]()
-  var allMessageDic = [String:IMUIMessageModel]()
+  var allMessageDic = [String:IMUIMessageProtocol]()
   
   var count: Int {
     return allMsgidArr.count
   }
   
-  subscript(index: Int) -> IMUIMessageModel {
+  subscript(index: Int) -> IMUIMessageProtocol {
     let msgId = allMsgidArr[index]
     return allMessageDic[msgId]!
   }
   
-  subscript(msgId: String) -> IMUIMessageModel? {
+  subscript(msgId: String) -> IMUIMessageProtocol? {
     return allMessageDic[msgId]
   }
   
@@ -37,17 +37,16 @@ class IMUIChatDataManager: NSObject {
     allMessageDic.removeAll()
   }
   
-  func index(of message: IMUIMessageModel) -> Int? {
+  func index(of message: IMUIMessageProtocol) -> Int? {
     return allMsgidArr.index(of: message.msgId)
   }
   
-  open func appendMessage(with message: IMUIMessageModel) {
-    
+  open func appendMessage(with message: IMUIMessageProtocol) {
     self.allMsgidArr.append(message.msgId)
     self.allMessageDic[message.msgId] = message
   }
   
-  func updateMessage(with message: IMUIMessageModel) {
+  func updateMessage(with message: IMUIMessageProtocol) {
     if message.msgId == "" {
       print("the msgId is empty, cann't update message")
       return
@@ -56,7 +55,7 @@ class IMUIChatDataManager: NSObject {
     allMessageDic[message.msgId] = message
   }
   
-  func insertMessage(with message: IMUIMessageModel) {
+  func insertMessage(with message: IMUIMessageProtocol) {
     if message.msgId == "" {
       print("the msgId is empty, cann't insert message")
       return
@@ -66,7 +65,7 @@ class IMUIChatDataManager: NSObject {
     self.allMessageDic[message.msgId] = message
   }
   
-  open func insertMessages(with messages:[IMUIMessageModel]) {
+  open func insertMessages(with messages:[IMUIMessageProtocol]) {
     for element in messages {
       self.insertMessage(with: element)
     }

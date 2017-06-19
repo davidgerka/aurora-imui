@@ -14,26 +14,22 @@ import UIKit
  *  'IMUIMessageCellLayoutProtocal' protocol.
  *  each IMUIMessageBaseCell need IMUIMessageCellLayoutProtocal to layout cell's items
  */
-open class IMUIMessageCellLayout: NSObject, IMUIMessageCellLayoutProtocal {
+open class IMUIMessageCellLayout: NSObject, IMUIMessageCellLayoutProtocol {
 
   public static var avatarSize: CGSize = CGSize(width: 40, height: 40)
-  
   public static var avatarOffsetToCell: UIOffset = UIOffset(horizontal: 16, vertical: 16)
   
   public static var timeLabelFrame: CGRect = CGRect.zero
   
   public static var nameLabelSize: CGSize = CGSize(width: 200, height: 18)
-  
   public static var nameLabelOffsetToAvatar: UIOffset = UIOffset(horizontal: 8 , vertical: 0)
   
   public static var bubbleOffsetToAvatar: UIOffset = UIOffset(horizontal: 8 , vertical: 0)
   
   public static var cellWidth: CGFloat = 0
-  
   public static var cellContentInset: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
   
   public static var statusViewSize: CGSize = CGSize(width: 30, height: 30)
-  
   public static var statusViewOffsetToBubble: UIOffset = UIOffset(horizontal: 12, vertical: 0)
   
   public static var bubbleMaxWidth: CGFloat = 170.0
@@ -51,10 +47,12 @@ open class IMUIMessageCellLayout: NSObject, IMUIMessageCellLayoutProtocal {
   
   public init(isOutGoingMessage: Bool,
                  isNeedShowTime: Bool,
-              bubbleContentSize: CGSize) {
+              bubbleContentSize: CGSize,
+            bubbleContentInsets: UIEdgeInsets) {
     self.isOutGoingMessage = isOutGoingMessage
     self.isNeedShowTime = isNeedShowTime
     self.bubbleContentSize = bubbleContentSize
+    self.bubbleContentInsets = bubbleContentInsets
     
   }
   
@@ -63,6 +61,7 @@ open class IMUIMessageCellLayout: NSObject, IMUIMessageCellLayoutProtocal {
   open var isNeedShowTime: Bool
   
   open var bubbleContentSize: CGSize
+  open var bubbleContentInsets: UIEdgeInsets
   
   open var bubbleSize: CGSize {
     let bubbleWidth = bubbleContentSize.width +
@@ -135,7 +134,7 @@ open class IMUIMessageCellLayout: NSObject, IMUIMessageCellLayoutProtocal {
   
   // MARK - IMUIMessageCellLayoutProtocal
   open var bubbleContentInset: UIEdgeInsets {
-    return UIEdgeInsets.zero
+    return bubbleContentInsets
   }
   
   open var nameLabelFrame: CGRect {
@@ -288,7 +287,7 @@ open class IMUIMessageCellLayout: NSObject, IMUIMessageCellLayoutProtocal {
     return IMUIMessageCellLayout.cellContentInset
   }
   
-  open var statusView: IMUIMessageStatusViewProtocal {
+  open var statusView: IMUIMessageStatusViewProtocol {
     return IMUIMessageDefaultStatusView()
   }
 
@@ -315,5 +314,28 @@ open class IMUIMessageCellLayout: NSObject, IMUIMessageCellLayoutProtocal {
                   width: IMUIMessageCellLayout.statusViewSize.width,
                   height: IMUIMessageCellLayout.statusViewSize.height)
     
+  }
+  
+  open var bubbleContentView: IMUIMessageContentViewProtocol {
+    return IMUIDefaultContentView()
+  }
+  
+  open var bubbleContentType: String {
+    return "default"
+  }
+}
+
+class IMUIDefaultContentView: UIView, IMUIMessageContentViewProtocol{
+  
+  func layoutContentView(message message: IMUIMessageModelProtocol) {
+  
+  }
+  
+  func Activity() {
+  
+  }
+  
+  func inActivity () {
+  
   }
 }

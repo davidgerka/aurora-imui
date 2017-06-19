@@ -33,7 +33,7 @@ open class IMUIInputView: UIView {
   @IBOutlet weak var moreViewHeight: NSLayoutConstraint!
   @IBOutlet weak var inputTextViewHeight: NSLayoutConstraint!
   
-  @IBOutlet weak var featureView: IMUIFeatureView!
+  @IBOutlet open weak var featureView: IMUIFeatureView!
   @IBOutlet weak var inputTextView: UITextView!
   @IBOutlet weak var micBtn: UIButton!
   @IBOutlet weak var photoBtn: UIButton!
@@ -99,7 +99,6 @@ open class IMUIInputView: UIView {
       DispatchQueue.main.async {
         self.featureView.layoutFeature(with: .voice)
         self.showFeatureView()
-        NSLog("huangmin onSwitch to mic 2")
       }
     }
   }
